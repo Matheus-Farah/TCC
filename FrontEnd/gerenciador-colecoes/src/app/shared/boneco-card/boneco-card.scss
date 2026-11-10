@@ -1,0 +1,95 @@
+:host {
+  display: block;
+}
+
+.boneco {
+  height: 100%;
+  overflow: hidden;
+  transition:
+    border-color 0.2s,
+    transform 0.2s;
+
+  &:hover {
+    border-color: var(--mat-sys-on-surface-variant, #c9d1da);
+    transform: translateY(-3px);
+  }
+
+  mat-card-actions {
+    padding: 0 1rem 1rem;
+
+    button {
+      width: 100%;
+    }
+  }
+
+  //? Botaõ da peça na coleção
+  .na-colecao {
+    border-color: var(--mat-sys-primary, #1e6bff);
+    background-color: var(--mat-sys-primary-container, #0a2a66);
+  }
+}
+
+.boneco-link {
+  flex: 1;
+  display: block;
+  color: inherit;
+  text-decoration: none;
+
+  &,
+  & * {
+    cursor: pointer;
+  }
+
+  *:focus-visible {
+    outline: 2px solid var(--mat-sys-primary, #1e6bff);
+    outline-offset: -2px;
+  }
+}
+
+mat-chip-set {
+  pointer-events: none; //? curso e clik passam para o link por baixo
+}
+
+.foto {
+  aspect-ratio: 3 / 4;
+  display: grid;
+  place-items: center;
+
+  background: linear-gradient(
+    160deg,
+    var(--mat-sys-primary-container, #0a2a66),
+    var(--mat-sys-surface, #0b0d12)
+  );
+  color: var(--mat-sys-on-surface-variant, #c9d1da);
+
+  font-size: 0.8rem;
+  letter-spacing: 0.1rem;
+  text-transform: uppercase;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.info {
+  padding-bottom: 0.75rem;
+
+  h3 {
+    margin: 0.5rem 0 0.15rem;
+    font: var(--mat-sys-title-medium);
+  }
+
+  p {
+    margin: 0;
+    color: var(--mat-sys-on-surface-variant, #c9d1da);
+    font-size: 0.85rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .boneco {
+    transition: none;
+  }
+}

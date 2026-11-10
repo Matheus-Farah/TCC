@@ -1,0 +1,48 @@
+:host {
+  display: block;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.topo {
+  display: grid;
+  grid-template-columns: 1fr minmax(220px, 380px) 1fr;
+  align-items: center;
+  gap: 1rem;
+  padding-inline: 2rem;
+  border-bottom: 1px solid var(--mat-sys-outline-variant, #3a4250);
+}
+
+.logo {
+  justify-self: start;
+  width: 44px;
+  height: 44px;
+
+  display: grid;
+  place-items: center;
+
+  border: 2px solid var(--mat-sys-primary, #1e6bff);
+  border-radius: 50%;
+
+  color: var(--mat-sys-on-surface-variantm, #c9d1da);
+  font-size: 0.6rem;
+  letter-spacing: 0.1rem;
+}
+
+.centro {
+  display: flex;
+  justify-content: center;
+  min-width: 0;
+}
+
+nav {
+  justify-self: end;
+  display: felx;
+  align-items: center;
+  gap: 0.5rem;
+
+  a.ativo {
+    color: var(--mat-sys-primary, #1e6bff);
+  }
+}

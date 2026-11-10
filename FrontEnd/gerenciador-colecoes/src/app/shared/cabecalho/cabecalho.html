@@ -1,0 +1,18 @@
+<mat-toolbar class="topo">
+  <div class="logo">LOGO</div>
+
+  <div class="centro">
+    <ng-content />
+  </div>
+
+  <nav>
+    <a mat-button routerLink="/home" routerLinkActive="ativo">Início</a
+    ><a mat-button routerLink="/minha-colecao" routerLinkActive="ativo"
+      >Minha coleção
+    </a>
+    <button mat-stroked-button type="button" (click)="sair()">
+      <mat-icon>logout</mat-icon>
+      Sair
+    </button>
+  </nav>
+</mat-toolbar>

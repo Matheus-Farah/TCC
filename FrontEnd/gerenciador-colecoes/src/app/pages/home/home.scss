@@ -1,0 +1,156 @@
+.busca {
+  width: 100%;
+
+  //? Bordas arredondadas
+  --mat-form-field-outlined-container: 20px;
+
+  //? Altura menor
+  --mat-form-field-container-height: 40px;
+  --mat-form-field-container-vertical-padding: 8px;
+}
+
+.conteudo {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+}
+
+h2 {
+  margin: 2rem 0 1rem;
+  font: var(--mat-sys-headline-small);
+}
+
+.vazio {
+  color: var(--mat-sys-on-surface-variant, #c9d1da);
+}
+
+//? Carrossel de lançamentos
+
+.carrossel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+}
+
+.faixa {
+  display: flex;
+  transition: transform 0.5s ease;
+}
+
+.slide {
+  position: relative;
+  display: block;
+
+  flex: 0 0 100%;
+  min-height: 280px;
+  aspect-ratio: 16 / 7;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+.slide-imagem {
+  position: absolute;
+  inset: 0;
+
+  display: grid;
+  place-items: center;
+
+  background: linear-gradient(
+    135deg,
+    var(--mat-sys-primary-container, #0a2a66),
+    var(--mat-sys-surface, #0b0d12)
+  );
+  color: var(--mat-sys-on-surface-variant, #c9d1da);
+
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.slide-texto {
+  position: absolute;
+  inset: auto 0 0 0;
+  padding: 3rem 1.75rem 1.5rem;
+  background: linear-gradient(transparent, rgba(11, 13, 18, 0.92));
+
+  h3 {
+    margin: 0.5rem 0 0.15rem;
+    font: var(--mat-sys-headline-small);
+  }
+
+  p {
+    margin: 0;
+    color: var(--mat-sys-on-surface-variant, #c9d1da);
+  }
+}
+
+.seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: rgba(11, 13, 18, 0.7);
+
+  &.anterior {
+    left: 1rem;
+  }
+
+  &.proximo {
+    right: 1rem;
+  }
+}
+
+.pontos {
+  position: absolute;
+  right: 1.5rem;
+  bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.ponto {
+  flex: none;
+  box-sizing: border-box;
+
+  width: 10px;
+  height: 10px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+
+  appearance: none;
+  background-color: transparent;
+
+  border: 1px solid var(--mat-sys-on-surface-variant, #c9d1da);
+  border-radius: 50%;
+  cursor: pointer;
+
+  &.ativo {
+    background-color: var(--mat-sys-primary, #1e6bff);
+    border-color: var(--mat-sys-primary, #1e6bff);
+  }
+}
+
+//? Grade de Produtos
+
+.grade {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.25rem;
+}
+
+mat-chip-set {
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faixa {
+    transition: none;
+  }
+}

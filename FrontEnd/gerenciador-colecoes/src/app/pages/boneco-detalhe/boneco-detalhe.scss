@@ -1,0 +1,146 @@
+.conteudo {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem 4rem;
+}
+
+.voltar {
+  margin-bottom: 0.5rem;
+}
+
+.detalhe {
+  display: grid;
+  grid-template-columns: minmax(0, 480px) 1fr;
+  gap: 2.5rem;
+  align-items: start;
+
+  @media (max-width: 800px) {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+//? Carrossel de fotos
+.galeria {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 3 / 4;
+
+  border: 1px solid var(--mat-sys-outline-variant, #3a4250);
+  border-radius: 16px;
+}
+
+.faixa {
+  display: flex;
+  height: 100%;
+  transition: transform 0.4s ease;
+}
+
+.slide {
+  flex: 0 0 100%;
+  height: 100%;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &.plcaceholder {
+    display: grid;
+    place-items: center;
+
+    background: linear-gradient(
+      160deg,
+      var(--mat-sys-primary-container, #0a2a66),
+      var(--mat-sys-surface, #0b0d12)
+    );
+    color: var(--mat-sys-on-surface-variant, #c9d1da);
+
+    letter-spacing: 0.15rem;
+    text-transform: uppercase;
+  }
+}
+
+.seta {
+  position: absolute;
+  top: 50%;
+  transform: translateY((-50%));
+  background-color: rgba(11, 13, 18, 0.7);
+
+  &.anterior {
+    left: 0.75rem;
+  }
+
+  &.proximo {
+    right: 0.75rem;
+  }
+}
+
+.pontos {
+  position: absolute;
+  right: 0;
+  bottom: 1rem;
+  left: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.ponto {
+  flex: none;
+  box-sizing: border-box;
+
+  width: 10px;
+  height: 10px;
+  min-width: 0;
+  min-height: 0;
+  padding: 0;
+
+  appearance: none;
+  background-color: transparent;
+  border: 1px solid var(--mat-sys-on-surface-variant, #c9d1da);
+  border-radius: 50%;
+  cursor: pointer;
+
+  &.ativo {
+    background-color: var(--mat-sys-primary, #1e6bff);
+    border-color: var(--mat-sys-primary, #1e6bff);
+  }
+}
+
+//? Informações
+.info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.5rem;
+
+  h1 {
+    margin: 0.5rem 0 0;
+    font: var(--mat-sys-display-small);
+  }
+
+  .franquia {
+    margin: 0 0 1.5rem;
+    color: var(--mat-sys-on-surface-variant, #c9d1da);
+    font: var(--mat-sys-title-medium);
+  }
+}
+
+.acao {
+  height: 48px;
+  padding-inline: 1.5rem;
+}
+
+.vazio {
+  color: var(--mat-sys-on-surface-variant, #c9d1da);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .faixa {
+    transition: none;
+  }
+}

@@ -1,0 +1,145 @@
+<app-cabecalho>
+  <mat-form-field class="busca" appearance="outline" subscriptSizing="dynamic">
+    <mat-label>Pesquisar</mat-label>
+    <mat-icon matPrefix>search</mat-icon>
+    <input
+      matInput
+      #campo
+      type="text"
+      autocomplete="off"
+      placeholder="Nome, franquia ou marca"
+      [value]="busca()"
+      (input)="atualizarBusca(campo.value)"
+    />
+
+    @if (busca()) {
+      <button
+        mat-icon-button
+        matSuffix
+        type="button"
+        aria-label="Limpar pesquisa"
+        (click)="atualizarBusca('')"
+      >
+        <mat-icon>close</mat-icon>
+      </button>
+    }
+  </mat-form-field>
+</app-cabecalho>
+
+<main class="conteudo">
+  <section>
+    <h2>Escolha uma marca</h2>
+    <app-seletor-marcas
+      [selecionada]="marcaSelecionada()"
+      (selecionadaChange)="definirMarca($event)"
+    />
+  </section>
+
+  @if (!buscando()) {
+    <section>
+      <h2>Lançamentos</h2>
+      @if (lancamentosFiltrados().length) {
+        <mat-card
+          appearance="outlined"
+          class="carrossel"
+          role="region"
+          aria-label="Lançamentos"
+          (mouseenter)="pausado.set(true)"
+          (mouseenter)="pausado.set(false)"
+          (focusin)="pausado.set(true)"
+          (focusout)="pausado.set(false)"
+        >
+          <div
+            class="faixa"
+            [style.transform]="'translateX(-' + indice() * 100 + '%)'"
+          >
+            @for (boneco of lancamentosFiltrados(); track boneco.id) {
+              <a [routerLink]="['/boneco', boneco.id]" class="slide">
+                <div class="slide-imagem">
+                  @if (boneco.imagem) {
+                    <img [src]="boneco.imagem" [alt]="boneco.nome" />
+                  } @else {
+                    <span>{{ boneco.franquia }}</span>
+                  }
+                </div>
+
+                <div class="slide-texto">
+                  <mat-chip-set aria-label="Marca">
+                    <mat-chip>{{ nomeDaMarca(boneco.marca) }}</mat-chip>
+                  </mat-chip-set>
+                  <h3>{{ boneco.nome }}</h3>
+                  <p>{{ boneco.franquia }}</p>
+                </div>
+              </a>
+            }
+          </div>
+
+          @if (lancamentosFiltrados().length > 1) {
+            <button
+              mat-icon-button
+              type="button"
+              class="seta anterior"
+              (click)="anterior()"
+              aria-label="Lançamento Anterior"
+            >
+              <mat-icon>chevron_left</mat-icon>
+            </button>
+            <button
+              mat-icon-button
+              type="button"
+              class="seta proximo"
+              (click)="proximo()"
+              aria-label="Próximo Lançamento"
+            >
+              <mat-icon>chevron_right</mat-icon>
+            </button>
+
+            <div class="pontos">
+              @for (
+                boneco of lancamentosFiltrados();
+                track boneco.id;
+                let i = $index
+              ) {
+                <button
+                  type="button"
+                  class="ponto"
+                  [class.ativo]="i === indice()"
+                  [attr.aria-label]="'Ir para ' + boneco.nome"
+                  (click)="indice.set(i)"
+                ></button>
+              }
+            </div>
+          }
+        </mat-card>
+      } @else {
+        <p class="vazio">Nenhum lançamento desta marca por enquanto.</p>
+      }
+    </section>
+  }
+
+  <section>
+    <h2>
+      @if (buscando()) {
+        Resultados para "{{ busca().trim() }}"
+      } @else {
+        Produtos
+      }
+    </h2>
+
+    @if (produtosFiltrados().length) {
+      <div class="grade">
+        @for (boneco of produtosFiltrados(); track boneco.id) {
+          <app-boneco-card [boneco]="boneco" />
+        }
+      </div>
+    } @else {
+      <p class="vazio">
+        @if (buscando()) {
+          Nenhuma peça encontrada para essa pesquisa.
+        } @else {
+          Nenhum produto desta marca por enquanto.
+        }
+      </p>
+    }
+  </section>
+</main>

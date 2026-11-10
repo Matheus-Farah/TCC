@@ -1,0 +1,39 @@
+<mat-card appearance="outlined" class="boneco">
+  <a class="boneco-link" [routerLink]="['/boneco', boneco().id]">
+    <div class="foto">
+      @if (boneco().imagem) {
+        <img [src]="boneco().imagem" [alt]="boneco().nome" />
+      } @else {
+        <span>{{ boneco().franquia }}</span>
+      }
+    </div>
+
+    <mat-card-content class="info">
+      <mat-chip-set aria-label="Marca">
+        <mat-chip>{{ nomeDaMarca() }}</mat-chip>
+      </mat-chip-set>
+      <h3>{{ boneco().nome }}</h3>
+      <p>{{ boneco().franquia }}</p>
+    </mat-card-content>
+  </a>
+
+  <mat-card-actions>
+    @if (modo() === 'colecao') {
+      <button mat-stroked-button type="button" (click)="alternarColecao()">
+        <mat-icon>delete</mat-icon>
+        Remover da coleção
+      </button>
+    } @else {
+      <button
+        mat-stroked-button
+        type="button"
+        [class.na-colecao]="naColecao()"
+        [attr.aria-pressed]="naColecao()"
+        (click)="alternarColecao()"
+      >
+        <mat-icon>{{ naColecao() ? 'check' : 'add' }}</mat-icon>
+        {{ naColecao() ? 'Na coleção' : 'Adicionar à coleção' }}
+      </button>
+    }
+  </mat-card-actions>
+</mat-card>

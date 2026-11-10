@@ -1,0 +1,13 @@
+# Python / API
+venv/
+.env
+__pycache__/
+
+#Angular
+node_modules/
+dist/
+.angular/
+
+#Sistema / editor
+.DS_Store
+Thumbs.db

@@ -1,0 +1,45 @@
+<app-cabecalho />
+
+<main class="conteudo">
+  <mat-tab-group animationDuration="200ms">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        Minha Coleção
+        <span class="contagem">{{ colecao.total() }}</span>
+      </ng-template>
+
+      <div class="aba">
+        @if (colecao.total() === 0) {
+          <div class="estado-vazio">
+            <mat-icon>inventory_2</mat-icon>
+            <h2>Sua coleção está vazia!</h2>
+            <p>
+              Use o botão "Adicionar à coleção" nas peças da página inicial.
+            </p>
+            <a mat-flat-button routerLink="/home">Explorar peças</a>
+          </div>
+        } @else {
+          <section>
+            <h2>Escolha uma marca</h2>
+            <app-seletor-marcas [(selecionada)]="marcaSelecionada" />
+          </section>
+
+          <section>
+            <h2>Peças</h2>
+            @if (itensFiltrados().length) {
+              <div class="grade">
+                @for (boneco of itensFiltrados(); track boneco.id) {
+                  <app-boneco-card [boneco]="boneco" modo="colecao" />
+                }
+              </div>
+            } @else {
+              <p class="vazio">
+                Você ainda não tem peças desta marca na coleção.
+              </p>
+            }
+          </section>
+        }
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</main>

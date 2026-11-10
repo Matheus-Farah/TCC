@@ -1,0 +1,20 @@
+<div class="marcas">
+  @for (marca of marcas; track marca.id) {
+    <mat-card
+      appearance="outlined"
+      class="marca"
+      role="button"
+      tabindex="0"
+      [class.selecionada]="selecionada() === marca.id"
+      [attr.aria-pressed]="selecionada() === marca.id"
+      (click)="selecionar(marca.id)"
+      (keydown.enter)="selecionar(marca.id)"
+      (keydown.space)="selecionar(marca.id); $event.preventDefault()"
+    >
+      <mat-card-header>
+        <mat-card-title>{{ marca.nome }}</mat-card-title>
+        <mat-card-subtitle>{{ marca.descricao }}</mat-card-subtitle>
+      </mat-card-header>
+    </mat-card>
+  }
+</div>

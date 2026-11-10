@@ -1,0 +1,44 @@
+:host {
+  display: block;
+}
+
+.marcas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.marca {
+  cursor: pointer;
+  transition:
+    border-color 0.2s,
+    background-color 0.2s,
+    box-shadow 0.2s,
+    transform 0.2s;
+
+  mat-card-header {
+    padding-bottom: 1rem;
+  }
+
+  &:hover {
+    border-color: var(--mat-sys-primary, #1e6bff);
+    transform: translateY(-2px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--mat-sys-primary, #1e6bff);
+    outline-offset: 2px;
+  }
+
+  &.selecionada {
+    border-color: var(--mat-sys-primary, #1e6bff);
+    background-color: var(--mat-sys-primary-container, #0a2a66);
+    box-shadow: 0 0 20px rgba(30, 107, 255, 0.35);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marca {
+    transition: none;
+  }
+}

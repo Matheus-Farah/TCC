@@ -1,0 +1,101 @@
+<app-cabecalho />
+
+<main class="conteudo">
+  <button
+    mat-icon-button
+    type="button"
+    class="voltar"
+    aria-label="Voltar"
+    (click)="voltar()"
+  >
+    <mat-icon>arrow_back</mat-icon>
+  </button>
+
+  @if (boneco(); as item) {
+    <article class="detalhe">
+      <div class="galeria" role="region" aria-label="Fotos do boneco">
+        <div
+          class="faixa"
+          [style.transform]="'translateX(-' + indice() * 100 + '%)'"
+        >
+          @for (foto of fotos(); track $index) {
+            <div class="slide">
+              <img [src]="foto" [alt]="item.nome + ' - foto ' + ($index + 1)" />
+            </div>
+          } @empty {
+            <div class="slide-placeholder">
+              <span>{{ item.franquia }}</span>
+            </div>
+          }
+        </div>
+
+        @if (fotos().length > 1) {
+          <button
+            mat-icon-button
+            type="button"
+            class="seta anetrior"
+            (click)="anterior()"
+            aria-label="Foto anterior"
+          >
+            <mat-icon>chevron_left</mat-icon>
+          </button>
+
+          <button
+            mat-icon-button
+            type="button"
+            class="seta proximo"
+            (click)="proxima()"
+            aria-label="Próxima foto"
+          >
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+
+          <div class="pontos">
+            @for (foto of fotos(); track $index) {
+              <button
+                type="button"
+                class="ponto"
+                [class.ativo]="$index === indice()"
+                [attr.aria-pressed]="'Ir para a foto ' + ($index + 1)"
+                (click)="indice.set($index)"
+              ></button>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="info">
+        <mat-chip-set aria-label="Marca">
+          <mat-chip>{{ nomeDaMarca() }}</mat-chip>
+        </mat-chip-set>
+
+        <h1>{{ item.nome }}</h1>
+        <p class="franquia">{{ item.franquia }}</p>
+
+        @if (naColecao()) {
+          <button
+            mat-stroked-button
+            type="button"
+            class="acao"
+            (click)="alternarColecao()"
+          >
+            <mat-icon>check</mat-icon>
+            Na coleção
+          </button>
+        } @else {
+          <button
+            mat-flat-button
+            type="button"
+            class="acao"
+            (click)="alternarColecao()"
+          >
+            <mat-icon>add</mat-icon>
+            Adicionar à coleção
+          </button>
+        }
+      </div>
+    </article>
+  } @else {
+    <p class="vazio">Peça não encontrada.</p>
+  }
+</main>
