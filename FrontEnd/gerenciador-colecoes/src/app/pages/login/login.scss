@@ -147,3 +147,21 @@ mat-error {
     transition: none;
   }
 }
+
+//? Erro
+
+.erro-api {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 12px;
+
+  color: var(--mat-sys-error);
+  font-size: 0.9rem;
+
+  mat-icon {
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+  }
+}

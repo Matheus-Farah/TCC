@@ -1,6 +1,6 @@
 import { Injectable, computed, inject, signal } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, map, tap } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, catchError, map, of, tap } from 'rxjs';
 
 export interface Usuario {
   id: number;
@@ -59,6 +59,32 @@ export class AuthService {
     localStorage.setItem(CHAVE_USUARIO, JSON.stringify(resposta.usuario));
     this.usuario.set(resposta.usuario);
   }
+
+  sessaoValida(): boolean {
+    const token = this.token();
+
+    if (!token || tokenExpirado(token)) {
+      if (this.usuario()) this.logout();
+      return false;
+    }
+
+    return this.usuario() !== null;
+  }
+
+  validarSessao(): Observable<unknown> {
+    if (!this.sessaoValida()) return of(null);
+
+    return this.http.get<Usuario>(`${this.apiUrl}/me`).pipe(
+      tap((usuario) => {
+        localStorage.setItem(CHAVE_USUARIO, JSON.stringify(usuario));
+        this.usuario.set(usuario);
+      }),
+      catchError((erro: HttpErrorResponse) => {
+        if (erro.status === 401) this.logout();
+        return of(null);
+      }),
+    );
+  }
 }
 
 function lerUsuarioSalvo(): Usuario | null {
@@ -67,5 +93,15 @@ function lerUsuarioSalvo(): Usuario | null {
     return salvo ? (JSON.parse(salvo) as Usuario) : null;
   } catch {
     return null;
+  }
+}
+
+function tokenExpirado(token: string): boolean {
+  try {
+    const base64 = token.split('.')[1].replace(/-/g, '+').replace(/_/g, '/');
+    const { exp } = JSON.parse(atob(base64)) as { exp?: number };
+    return !exp || exp * 1000 <= Date.now();
+  } catch {
+    return true;
   }
 }

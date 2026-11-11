@@ -1,7 +1,9 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
+
 from app.core.seguranca import criar_token, gerar_hash, verificar_senha
+from app.core.dependencias import UsuarioAtual
 from app.database import get_bd
 from app.models import Colecao, Usuario
 from app.schemas.usuario import TokenOut, UsuarioCadastro, UsuarioLogin, UsuarioOut
@@ -13,6 +15,10 @@ def resposta_com_token(usuario: Usuario) -> TokenOut:
         access_token=criar_token(usuario.id),
         usuario=UsuarioOut.model_validate(usuario)
     )
+
+@router.get("/me", response_model=UsuarioOut)
+def meus_dados(usuario: UsuarioAtual):
+    return usuario
 
 @router.post("/cadastro", response_model=TokenOut, status_code=status.HTTP_201_CREATED)
 def cadastrar(dados: UsuarioCadastro, bd: Session = Depends(get_bd)):
@@ -44,3 +50,4 @@ def login(dados: UsuarioLogin, bd: Session = Depends(get_bd)):
         raise HTTPException(status.HTTP_401_UNAUTHORIZED, "E-mail ou senha inválidos")
 
     return resposta_com_token(usuario)
+

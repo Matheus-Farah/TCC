@@ -101,8 +101,24 @@
           </div>
         </div>
 
-        <button mat-flat-button type="submit" class="enviar">
-          {{ registro() ? 'Criar conta' : 'Entrar' }}
+        @if (erroApi()) {
+          <p class="erro-api" role="alert">
+            <mat-icon>error_outline</mat-icon>
+            {{ erroApi() }}
+          </p>
+        }
+
+        <button
+          mat-flat-button
+          type="submit"
+          class="enviar"
+          [disabled]="enviando()"
+        >
+          @if (enviando()) {
+            Aguarde...
+          } @else {
+            {{ registro() ? 'Criar conta' : 'Entrar' }}
+          }
         </button>
       </form>
 

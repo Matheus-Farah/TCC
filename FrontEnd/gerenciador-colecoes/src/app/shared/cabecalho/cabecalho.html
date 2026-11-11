@@ -10,6 +10,11 @@
     ><a mat-button routerLink="/minha-colecao" routerLinkActive="ativo"
       >Minha coleção
     </a>
+
+    @if (primeiroNome()) {
+      <span class="usuario">Olá, {{ primeiroNome() }}</span>
+    }
+
     <button mat-stroked-button type="button" (click)="sair()">
       <mat-icon>logout</mat-icon>
       Sair
