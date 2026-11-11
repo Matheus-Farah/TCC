@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers import marcas, bonecos
+from app.routers import auth, marcas, bonecos
 
 app = FastAPI(title="Gerenciador de Coleções API")
 
@@ -13,6 +13,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+app.include_router(auth.router)
 app.include_router(marcas.router)
 app.include_router(bonecos.router)
 

@@ -41,7 +41,7 @@ export class BonecoService {
       .pipe(map((lista) => lista.map(paraBoneco)));
   }
 
-  buscarPorId(id: number): Observable<Boneco[]> {
+  buscarPorId(id: number): Observable<Boneco> {
     return this.http
       .get<BonecoApi>(`${this.apiUrl}/${id}`)
       .pipe(map(paraBoneco));
